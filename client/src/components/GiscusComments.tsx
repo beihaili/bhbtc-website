@@ -14,9 +14,9 @@ export default function GiscusComments() {
     <div className="mt-12 pt-8 border-t border-border">
       <Giscus
         repo="beihaili/bhbtc-website"
-        repoId="R_kgDONdHmrw"
+        repoId="R_kgDORTkF-g"
         category="Announcements"
-        categoryId="DIC_kwDONdHmr84Clpk3"
+        categoryId="DIC_kwDORTkF-s4C2wSS"
         mapping="pathname"
         strict="0"
         reactionsEnabled="1"
