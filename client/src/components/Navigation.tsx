@@ -91,7 +91,7 @@ export default function Navigation() {
               <Link key={item.path} href={item.path}>
                 <span
                   className={`text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                    location === item.path
+                    (item.path === "/" ? location === "/" : location.startsWith(item.path))
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
@@ -156,7 +156,7 @@ export default function Navigation() {
                       <span
                         onClick={() => setMobileOpen(false)}
                         className={`block px-4 py-3 rounded-md text-sm font-medium cursor-pointer transition-colors duration-200 ${
-                          location === item.path
+                          (item.path === "/" ? location === "/" : location.startsWith(item.path))
                             ? "bg-primary/10 text-primary"
                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}

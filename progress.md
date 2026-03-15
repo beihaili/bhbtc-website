@@ -69,41 +69,58 @@
   - 新建: `GiscusComments.tsx`, `BTCDonation.tsx`, `ReadingModeContext.tsx`
 
 ### Phase 3: Implementation
-- **Status:** in_progress
+- **Status:** complete
 - **Started:** 2026-02-18
-- **Session:** 2026-02-19
+- **Completed:** 2026-02-24
 - Actions taken:
   - 安装 @giscus/react 和 qrcode.react
   - 3.1 主题系统升级: index.css 添加完整 light/dark CSS 变量系统 (.dark 类)，App.tsx 启用 switchable=true
   - 3.2 移动端导航: Navigation.tsx 重写，添加 Sheet 汉堡菜单 + Sun/Moon 主题切换按钮 (framer-motion 旋转动画)
+  - 3.3 Markdown 渲染增强: 启用 @tailwindcss/typography 插件，添加完整 prose 主题变量覆盖 (light/dark)，自定义代码块、引用块、标题、链接、表格样式；新建 TableOfContents.tsx 组件，BlogPost.tsx 用 useRef+useEffect 收集 h2/h3 并赋 slug ID，xl+ 屏幕渲染侧边栏 TOC
   - 3.4 Giscus 评论: 创建 GiscusComments.tsx，在 BlogPost.tsx 底部集成
   - 3.5 BTC 打赏: 创建 BTCDonation.tsx (QR 码 + 复制按钮 Dialog)，集成到 BlogPost 和 About
+  - 3.6 阅读模式: 跳过 (精简功能)
   - 3.7 视觉升级: Home.tsx 全面重写，用 framer-motion 替换 CSS keyframe 动画，精简视觉噪音
-  - BlogPost.tsx: 修复 prose-invert 动态切换 (dark 模式才用 prose-invert)
-  - 构建验证通过 (pnpm build ✓)
+  - 构建验证通过 (npm run build ✓)
 - Files created/modified:
-  - `client/src/index.css` — 重写 CSS 变量: :root (light) + .dark (dark)
+  - `client/src/index.css` — @plugin "@tailwindcss/typography" + 完整 prose 主题覆盖 + CSS 变量系统
   - `client/src/App.tsx` — switchable=true
   - `client/src/components/Navigation.tsx` — 主题切换 + 移动端 Sheet 菜单
   - `client/src/components/GiscusComments.tsx` — 新建 Giscus 评论组件
   - `client/src/components/BTCDonation.tsx` — 新建 BTC 打赏组件
-  - `client/src/pages/BlogPost.tsx` — 集成 Giscus + BTC 打赏，动态 prose-invert
+  - `client/src/components/TableOfContents.tsx` — 新建 TOC 组件 (IntersectionObserver 高亮活跃项)
+  - `client/src/pages/BlogPost.tsx` — 集成 Giscus + BTC 打赏 + TOC + 动态 prose-invert + 两列布局
   - `client/src/pages/About.tsx` — 集成 BTC 打赏入口
   - `client/src/pages/Home.tsx` — framer-motion 动画，视觉极简升级
 
 ### Phase 4: Testing & Verification
-- **Status:** pending
+- **Status:** complete
+- **Started:** 2026-02-24
+- **Completed:** 2026-02-24
 - Actions taken:
-  -
+  - 构建验证通过: npm run build ✓ (no errors, pre-existing chunk size warnings only)
+  - TypeScript 类型检查通过 (npx tsc --noEmit, 0 errors)
+  - 完整代码审查: index.css, Navigation, Footer, BlogPost, About, Home, Contact, GiscusComments, BTCDonation, TableOfContents, ThemeContext, App.tsx
+  - 修复 Bug #1: Navigation.tsx 活跃状态 — `/blog/:id` 子路由不高亮 Blog 导航项 (location.startsWith(item.path) fix)
+  - 修复 Bug #2: Footer.tsx Twitter 链接 — light 模式 `hover:text-accent` (near-white, invisible) → `hover:text-primary`
 - Files created/modified:
-  -
+  - `client/src/components/Navigation.tsx` — 修复 desktop + mobile 活跃状态判断逻辑
+  - `client/src/components/Footer.tsx` — 修复 Twitter hover 颜色
 
 ### Phase 5: Delivery
-- **Status:** pending
+- **Status:** complete
+- **Started:** 2026-02-24
+- **Completed:** 2026-02-24
 - Actions taken:
-  -
+  - 最终代码审查：完整审查所有修改文件 (index.css, Navigation, Footer, BlogPost, About, Home, Contact, GiscusComments, BTCDonation, TableOfContents)
+  - 验证 Vercel 部署配置：vercel.json 正确 (outputDirectory: dist/public, SPA rewrites ✓)
+  - 清理未使用文件：删除 ManusDialog.tsx 和 Map.tsx (Manus/Google Maps scaffold 遗留，未被任何页面引用)
+  - 修复 sonner.tsx：将 `useTheme` 从 next-themes 改为使用我们的 ThemeContext，确保 toast 通知正确跟随主题切换
+  - 构建验证通过 (npm run build ✓) + TypeScript 类型检查通过 (tsc --noEmit, 0 errors)
 - Files created/modified:
-  -
+  - `client/src/components/ui/sonner.tsx` — 修复 useTheme 导入为自定义 ThemeContext
+  - ~~`client/src/components/ManusDialog.tsx`~~ — 已删除 (unused Manus scaffold)
+  - ~~`client/src/components/Map.tsx`~~ — 已删除 (unused Google Maps scaffold)
 
 ## Test Results
 | Test | Input | Expected | Actual | Status |

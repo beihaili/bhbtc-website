@@ -76,7 +76,7 @@ export default function Home() {
               animate="animate"
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              币本位 · 比特币与 Web3 教育者
+              币本位 · 比特币开发者 · 教育者
             </motion.p>
 
             {/* Description */}
@@ -87,8 +87,8 @@ export default function Home() {
               animate="animate"
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              致力于用生动的叙事方式讲述比特币历史，用清晰的教程引导 Web3 新人入门。
-              让复杂的技术概念变得易懂，让理想主义的火种继续传递。
+              正在从 Bitcoin Holder 进化为 Bitcoin Contributor。参与 Chaincode Labs BOSS Challenge，
+              死磕 Bitcoin Core 底层协议，从 Taproot 到闪电网络。用开源写作让更多人读懂比特币。
             </motion.p>
 
             {/* CTA Buttons */}
@@ -227,10 +227,10 @@ export default function Home() {
                   </p>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 text-primary" />561
+                      <Star className="w-3.5 h-3.5 text-primary" />585
                     </span>
                     <span className="flex items-center gap-1">
-                      <GitFork className="w-3.5 h-3.5" />44
+                      <GitFork className="w-3.5 h-3.5" />47
                     </span>
                     <span className="text-xs">React · Python · JS</span>
                   </div>
@@ -276,9 +276,9 @@ export default function Home() {
           >
             <h2 className="text-3xl md:text-4xl font-bold">关于我</h2>
             <p className="text-muted-foreground leading-relaxed">
-              我是北海，一个比特币和 Web3 的教育者与传播者。
-              相信技术可以改变世界，相信开源精神和去中心化的理想。
-              通过写作和开源项目，让更多人理解比特币的价值，成为这场技术革命的参与者。
+              我是北海，正在从 Bitcoin Holder 进化为 Bitcoin Contributor。
+              坚信代码即信任，相信数学比任何机构都可靠。
+              通过开源项目和技术写作，让更多人读懂比特币、掌握自己的私钥。
             </p>
             <Button variant="outline" size="lg" asChild>
               <Link href="/about">

@@ -231,3 +231,51 @@
 - 字体系统完整且高质量 (Space Grotesk + Inter + JetBrains Mono)
 - 基础动画已有但不够丰富 (仅 CSS fadeIn/fadeInUp)
 - 52 个 shadcn/ui 组件已就位，组件库丰富
+
+## Phase 5 Delivery Notes
+
+### Cleanup Actions
+- **Removed** `ManusDialog.tsx` — Manus AI scaffold component, never imported in any page
+- **Removed** `Map.tsx` — Google Maps scaffold component, never imported in any page
+- **Fixed** `sonner.tsx` — was importing `useTheme` from `next-themes` (returns "system" as default since next-themes isn't configured), now correctly uses our custom `ThemeContext`. This fixes toast notification theming to match user's current light/dark selection.
+
+### Vercel Deployment Config
+- `vercel.json`: `outputDirectory: "dist/public"` ✓, SPA rewrites to `index.html` ✓
+- No changes needed — config is correct for Vite static deployment
+
+### Unused Dependencies
+- `next-themes`: Still in package.json but only used in shadcn `sonner.tsx` which we've now fixed. Can be removed with `pnpm remove next-themes` in a future cleanup pass if desired.
+
+## Phase 4 Testing Notes
+
+### Bugs Found & Fixed
+| Bug | File | Fix |
+|-----|------|-----|
+| Navigation 活跃状态: `/blog/:id` 子路由不高亮 Blog 链接 | Navigation.tsx | `location === item.path` → `item.path === "/" ? location === "/" : location.startsWith(item.path)` (desktop & mobile) |
+| Footer Twitter `hover:text-accent` 在 light 模式下近白色不可见 | Footer.tsx | `hover:text-accent` → `hover:text-primary` |
+
+### Code Review Findings
+- Build: ✓ `npm run build` 通过，仅预存在的 mermaid/shiki chunk 尺寸警告 (非阻塞)
+- TypeScript: ✓ `tsc --noEmit` 0 errors
+- CSS 变量系统: light/dark 双主题完整，`:root` (light) + `.dark` (dark) 分离正确
+- `@custom-variant dark (&:is(.dark *))` 正确配置 Tailwind 4 class-based dark 模式
+- prose 主题变量: `.prose` (light) + `.prose-invert, .dark .prose` (dark) 覆盖完整
+- Giscus: `repo`, `repoId`, `categoryId` 已配置真实值，`inputPosition="bottom"` 正确
+- BTCDonation: `bitcoin:` URI scheme 正确，QR 码用纯白背景避免深色主题下扫码问题
+- TableOfContents: IntersectionObserver + slugify 中文处理完整
+- ThemeContext: `switchable=true` 已在 App.tsx 开启，localStorage 持久化正常
+- defaultTheme: 默认 dark 模式 (intentional，原站为暗色主题)
+
+## Phase 3 Implementation Notes
+
+### Tailwind v4 Typography Plugin
+- 在 Tailwind 4 中，通过 `@plugin "@tailwindcss/typography"` 在 CSS 文件中引入，不需要 tailwind.config.js
+- CSS 变量 `--tw-prose-*` 可以直接在 `.prose` 选择器内覆盖以定制主题
+- `prose-invert` 类读取 `--tw-prose-invert-*` 变量；但更清晰的方案是直接在 `.dark .prose` 中覆盖 `--tw-prose-*`
+- `blockquote p::before/after` 默认会生成引号，需要 `content: none` 移除
+
+### TOC 实现
+- streamdown 是流式渲染，有约 80ms 延迟才将所有 heading 元素注入 DOM，useEffect + setTimeout(fn, 80) 可解决时序问题
+- IntersectionObserver `rootMargin: "-20% 0% -60% 0%"` 对阅读体验活跃项高亮效果较好
+- slugify 对中文字符需要 `\u4e00-\u9fff` unicode range，否则中文标题会生成空 slug
+- TOC 仅在 xl+ 屏幕 (≥1280px) 显示，避免干扰正常阅读宽度

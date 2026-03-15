@@ -66,8 +66,9 @@ export default function Contact() {
     {
       icon: Mail,
       title: "邮件联系",
-      description: "通过表单发送消息,我会在 24 小时内回复",
-      action: "填写表单",
+      description: "libohan0218@gmail.com，我会在 24 小时内回复",
+      action: "发送邮件",
+      link: "mailto:libohan0218@gmail.com",
     },
     {
       icon: Github,

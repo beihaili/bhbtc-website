@@ -8,6 +8,7 @@ Design: Clean article reading experience
 */
 
 import { useRoute, Link } from "wouter";
+import { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,16 +16,61 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import GiscusComments from "@/components/GiscusComments";
 import BTCDonation from "@/components/BTCDonation";
+import TableOfContents, { type TocItem } from "@/components/TableOfContents";
 import { Calendar, Clock, ArrowLeft, Tag, Share2 } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { Streamdown } from "streamdown";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 
+/** Convert heading text to a URL-safe slug for anchor IDs. */
+function slugify(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\u3000]+/g, "-")         // spaces → dash
+    .replace(/[^\w\u4e00-\u9fff-]/g, "")  // keep word chars, CJK, dashes
+    .replace(/^-+|-+$/g, "");             // trim leading/trailing dashes
+}
+
 export default function BlogPost() {
   const [, params] = useRoute("/blog/:id");
   const { theme } = useTheme();
   const post = blogPosts.find(p => p.id === params?.id);
+  const articleRef = useRef<HTMLDivElement>(null);
+  const [tocItems, setTocItems] = useState<TocItem[]>([]);
+
+  // After Streamdown renders, collect h2/h3 elements, assign id attributes,
+  // and build the TOC item list.
+  useEffect(() => {
+    if (!articleRef.current || !post) return;
+
+    // Small timeout allows Streamdown streaming output to finish.
+    const timer = setTimeout(() => {
+      if (!articleRef.current) return;
+      const headings = articleRef.current.querySelectorAll<HTMLElement>("h2, h3");
+      const items: TocItem[] = [];
+      const seen = new Map<string, number>();
+
+      headings.forEach((heading) => {
+        const text = heading.textContent ?? "";
+        let id = slugify(text) || "heading";
+
+        // Deduplicate slugs (e.g. two sections with same name)
+        const count = seen.get(id) ?? 0;
+        seen.set(id, count + 1);
+        if (count > 0) id = `${id}-${count}`;
+
+        heading.id = id;
+        const level = parseInt(heading.tagName[1], 10);
+        items.push({ level, text, id });
+      });
+
+      setTocItems(items);
+    }, 80);
+
+    return () => clearTimeout(timer);
+  }, [post?.id]);
 
   if (!post) {
     return (
@@ -60,88 +106,106 @@ export default function BlogPost() {
       {/* Article */}
       <article className="pt-32 pb-20">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
-            {/* Back Button */}
-            <Button variant="ghost" size="sm" className="gap-2 mb-8 -ml-2" asChild>
-              <Link href="/blog">
-                <ArrowLeft className="w-4 h-4" />
-                返回博客
-              </Link>
-            </Button>
+          {/* Two-column layout: article + sticky TOC on xl+ screens */}
+          <div className="flex gap-10 justify-center">
 
-            {/* Metadata */}
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              <Badge variant="secondary">{post.category}</Badge>
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Calendar className="w-3.5 h-3.5" />
-                {post.date}
-              </span>
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Clock className="w-3.5 h-3.5" />
-                {post.readTime}
-              </span>
-            </div>
+            {/* Main Article Column */}
+            <div className="w-full max-w-3xl min-w-0">
+              {/* Back Button */}
+              <Button variant="ghost" size="sm" className="gap-2 mb-8 -ml-2" asChild>
+                <Link href="/blog">
+                  <ArrowLeft className="w-4 h-4" />
+                  返回博客
+                </Link>
+              </Button>
 
-            {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              {post.title}
-            </h1>
+              {/* Metadata */}
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <Badge variant="secondary">{post.category}</Badge>
+                <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <Calendar className="w-3.5 h-3.5" />
+                  {post.date}
+                </span>
+                <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <Clock className="w-3.5 h-3.5" />
+                  {post.readTime}
+                </span>
+              </div>
 
-            {/* Excerpt */}
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              {post.excerpt}
-            </p>
+              {/* Title */}
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                {post.title}
+              </h1>
 
-            {/* Author & Actions */}
-            <div className="flex items-center justify-between pb-8 mb-8 border-b border-border">
-              <div className="flex items-center gap-3">
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  className="w-11 h-11 rounded-full border-2 border-primary/20"
-                />
-                <div>
-                  <p className="font-semibold text-sm">{post.author.name}</p>
-                  <p className="text-xs text-muted-foreground">作者</p>
+              {/* Excerpt */}
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                {post.excerpt}
+              </p>
+
+              {/* Author & Actions */}
+              <div className="flex items-center justify-between pb-8 mb-8 border-b border-border">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={post.author.avatar}
+                    alt={post.author.name}
+                    className="w-11 h-11 rounded-full border-2 border-primary/20"
+                  />
+                  <div>
+                    <p className="font-semibold text-sm">{post.author.name}</p>
+                    <p className="text-xs text-muted-foreground">作者</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <BTCDonation />
+                  <Button variant="outline" size="sm" className="gap-2" onClick={handleShare}>
+                    <Share2 className="w-4 h-4" />
+                    分享
+                  </Button>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Article Content */}
+              <div
+                ref={articleRef}
+                className={`prose prose-lg max-w-none ${theme === "dark" ? "prose-invert" : ""}`}
+              >
+                <Streamdown>{post.content}</Streamdown>
+              </div>
+
+              {/* Tags */}
+              <div className="mt-12 pt-8 border-t border-border">
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map(tag => (
+                    <Badge key={tag} variant="outline" className="text-sm">
+                      <Tag className="w-3 h-3 mr-1" />
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* BTC Donation — inline card */}
+              <div className="mt-10 p-6 rounded-xl border border-primary/20 bg-primary/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-sm">觉得有帮助？</p>
+                  <p className="text-sm text-muted-foreground">用 BTC 打赏支持作者继续创作</p>
+                </div>
                 <BTCDonation />
-                <Button variant="outline" size="sm" className="gap-2" onClick={handleShare}>
-                  <Share2 className="w-4 h-4" />
-                  分享
-                </Button>
               </div>
+
+              {/* Giscus Comments */}
+              <GiscusComments />
             </div>
 
-            {/* Article Content */}
-            <div className={`prose prose-lg max-w-none ${theme === "dark" ? "prose-invert" : ""}`}>
-              <Streamdown>{post.content}</Streamdown>
-            </div>
+            {/* TOC Sidebar — visible only on xl+ and when TOC has items */}
+            {tocItems.length > 0 && (
+              <aside className="hidden xl:block w-52 shrink-0">
+                <div className="sticky top-32 max-h-[calc(100vh-9rem)] overflow-y-auto pb-4">
+                  <TableOfContents items={tocItems} />
+                </div>
+              </aside>
+            )}
 
-            {/* Tags */}
-            <div className="mt-12 pt-8 border-t border-border">
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map(tag => (
-                  <Badge key={tag} variant="outline" className="text-sm">
-                    <Tag className="w-3 h-3 mr-1" />
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* BTC Donation — inline card */}
-            <div className="mt-10 p-6 rounded-xl border border-primary/20 bg-primary/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <p className="font-semibold text-sm">觉得有帮助？</p>
-                <p className="text-sm text-muted-foreground">用 BTC 打赏支持作者继续创作</p>
-              </div>
-              <BTCDonation />
-            </div>
-
-            {/* Giscus Comments */}
-            <GiscusComments />
           </div>
         </div>
       </article>

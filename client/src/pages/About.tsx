@@ -56,20 +56,22 @@ export default function About() {
     },
     {
       year: "2025",
-      title: "持续贡献",
-      description: "继续完善项目，扩大影响力，让更多人理解比特币的价值。",
+      title: "深入 Bitcoin Core",
+      description: "参与 Chaincode Labs BOSS Challenge，系统学习比特币底层协议，从 Taproot、UTXO 模型到闪电网络，向 Bitcoin Contributor 迈进。",
     },
   ];
 
   const skills = [
+    "Bitcoin Core",
+    "Taproot / Schnorr",
+    "闪电网络",
+    "密码学",
+    "UTXO 模型",
     "比特币历史研究",
-    "Web3 技术教育",
     "技术写作",
     "开源项目管理",
     "React 开发",
-    "区块链技术",
-    "密码学基础",
-    "社区运营",
+    "Web3 教育",
   ];
 
   return (
@@ -85,7 +87,7 @@ export default function About() {
               关于我
             </h1>
             <p className="text-lg text-muted-foreground">
-              币本位 · 比特币与 Web3 的教育者与传播者
+              币本位 · 比特币开发者 · 教育者
             </p>
           </div>
         </div>
@@ -118,20 +120,20 @@ export default function About() {
                   <div className="flex-1 space-y-6 text-center md:text-left">
                     <div>
                       <h2 className="text-3xl font-bold mb-2">北海 (bhbtc)</h2>
-                      <p className="text-lg text-muted-foreground">比特币与 Web3 教育者</p>
+                      <p className="text-lg text-muted-foreground">比特币开发者 · 教育者</p>
                     </div>
 
                     <p className="text-base text-muted-foreground leading-relaxed">
-                      我是北海，一个坚定的比特币信仰者和 Web3 教育者。
-                      从 2021 年开始深入研究比特币和区块链技术，被其背后的去中心化理念和密码朋克精神深深吸引。
-                      我相信技术可以改变世界，相信开源和协作的力量，
-                      更相信每个人都应该拥有掌握自己财富和数据的权利。
+                      我是北海，正在从 Bitcoin Holder 进化为 Bitcoin Contributor。
+                      参与 Chaincode Labs BOSS Challenge，死磕 Bitcoin Core 底层协议，
+                      从 Taproot、Schnorr 签名到闪电网络，用代码读懂比特币的每一层设计。
+                      坚信代码即信任，相信数学比任何机构都可靠。
                     </p>
 
                     <p className="text-base text-muted-foreground leading-relaxed">
                       通过《比特币那些事儿》和《Get Started with Web3》两个开源项目，
-                      我希望用生动的叙事和清晰的教程，让更多人理解比特币的历史价值，
-                      掌握 Web3 的核心技能，成为这场技术革命的参与者而非旁观者。
+                      用叙事和教程让更多人读懂比特币的历史与技术，掌握自己的私钥，
+                      成为这场技术革命的参与者而非旁观者。
                     </p>
 
                     {/* Social Links */}
