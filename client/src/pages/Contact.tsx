@@ -49,17 +49,34 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("消息已发送!我会尽快回复您。");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
+    try {
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+      if (!formspreeId) {
+        // 未配置 Formspree，回退到 mailto
+        const mailto = `mailto:libohan0218@gmail.com?subject=${encodeURIComponent(formData.subject || "来自网站的消息")}&body=${encodeURIComponent(`来自: ${formData.name} (${formData.email})\n\n${formData.message}`)}`;
+        window.open(mailto, "_blank");
+        toast.success("已打开邮件客户端，请发送邮件。");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (res.ok) {
+        toast.success("消息已发送！我会尽快回复您。");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error("发送失败，请稍后重试或直接发送邮件。");
+      }
+    } catch {
+      toast.error("网络错误，请稍后重试。");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const contactMethods = [

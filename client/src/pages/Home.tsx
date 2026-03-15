@@ -152,7 +152,7 @@ export default function Home() {
               <Card className="group hover:shadow-lg transition-all duration-300 border-border/60 overflow-hidden h-full">
                 <div
                   className="h-44 bg-cover bg-center relative"
-                  style={{ backgroundImage: "url(/images/bitcoin-history-bg.png)" }}
+                  style={{ backgroundImage: "url(/images/bitcoin-history-bg.jpg)" }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
                 </div>
@@ -207,7 +207,7 @@ export default function Home() {
               <Card className="group hover:shadow-lg transition-all duration-300 border-border/60 overflow-hidden h-full">
                 <div
                   className="h-44 bg-cover bg-center relative"
-                  style={{ backgroundImage: "url(/images/web3-project-bg.png)" }}
+                  style={{ backgroundImage: "url(/images/web3-project-bg.jpg)" }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
                 </div>
