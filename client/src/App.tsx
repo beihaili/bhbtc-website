@@ -10,11 +10,13 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
+import AILearning from "./pages/AILearning";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path="/ai" component={AILearning} />
       <Route path="/projects" component={Projects} />
       <Route path="/about" component={About} />
       <Route path="/blog" component={Blog} />

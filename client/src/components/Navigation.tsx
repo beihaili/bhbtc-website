@@ -9,11 +9,7 @@ Design: Minimal refined navigation
 
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Github, Twitter, Sun, Moon, Menu } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,6 +22,7 @@ export default function Navigation() {
 
   const navItems = [
     { path: "/", label: "首页" },
+    { path: "/ai", label: "AI学习" },
     { path: "/projects", label: "项目" },
     { path: "/blog", label: "博客" },
     { path: "/about", label: "关于" },
@@ -77,7 +74,9 @@ export default function Navigation() {
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer group">
               <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-lg font-bold text-primary-foreground">₿</span>
+                <span className="text-lg font-bold text-primary-foreground">
+                  ₿
+                </span>
               </div>
               <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-200">
                 北海
@@ -87,11 +86,15 @@ export default function Navigation() {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <Link key={item.path} href={item.path}>
                 <span
                   className={`text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                    (item.path === "/" ? location === "/" : location.startsWith(item.path))
+                    (
+                      item.path === "/"
+                        ? location === "/"
+                        : location.startsWith(item.path)
+                    )
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
@@ -151,12 +154,16 @@ export default function Navigation() {
               </SheetTrigger>
               <SheetContent side="right" className="w-64 pt-12">
                 <div className="flex flex-col gap-1">
-                  {navItems.map((item) => (
+                  {navItems.map(item => (
                     <Link key={item.path} href={item.path}>
                       <span
                         onClick={() => setMobileOpen(false)}
                         className={`block px-4 py-3 rounded-md text-sm font-medium cursor-pointer transition-colors duration-200 ${
-                          (item.path === "/" ? location === "/" : location.startsWith(item.path))
+                          (
+                            item.path === "/"
+                              ? location === "/"
+                              : location.startsWith(item.path)
+                          )
                             ? "bg-primary/10 text-primary"
                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}
