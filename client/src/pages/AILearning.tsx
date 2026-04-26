@@ -45,6 +45,21 @@ const lessons = [
   },
 ];
 
+const faceReadingPrompt = `请根据我上传的人像照片，生成一张竖版东方玄学风格的「面相玄学分析报告」海报。
+
+设计要求：
+- 画面比例：竖版海报，适合小红书发布。
+- 视觉风格：古典羊皮纸背景、东方美学、宋代卷轴、玄学分析报告、金色标注线、红色印章、细致信息图。
+- 主体：保留人物真实五官气质，在脸部周围加入 01-12 的金色圆形编号标记，并用虚线连接到对应面部区域。
+- 标题：面相玄学分析报告。
+- 副标题：你的先天特质与未来趋势解读。
+- 顶部信息栏包含：分析对象、面相类型、五行倾向、分析维度。
+- 右侧做「面相十二宫解析」列表，每一项包含：特征、解析、趋势、建议。
+- 底部加入「五行能量分析」「性格与天赋」「综合评分」三个模块。
+- 色彩：米黄色、棕色、金色、墨黑、朱红印章色，整体高级、神秘、信息密度高。
+- 字体感觉：标题用中文书法/宋体风，正文用清晰中文排版。
+- 输出效果：像一张完整的 AI 面相分析报告，不要杂乱，不要低清晰度，不要乱码。`;
+
 const steps = ["扫码关注", "私信关键词：AI", "领取资料包", "跟着清单练习"];
 
 export default function AILearning() {
@@ -202,6 +217,57 @@ export default function AILearning() {
                   </motion.div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-14 md:py-20">
+          <div className="container">
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#ff2442]/10 px-3 py-1 text-sm font-bold text-[#ff2442]">
+                <Sparkles className="h-4 w-4" />
+                爆款提示词示例
+              </div>
+              <h2 className="text-3xl font-black md:text-4xl">
+                先放这个提示词和效果图
+              </h2>
+              <p className="mt-4 text-[#7a625c] dark:text-[#dec8c0]">
+                适合做小红书 AI
+                案例展示：用户上传照片，生成东方玄学风的面相分析报告。
+              </p>
+            </div>
+
+            <div className="grid items-start gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+              <Card className="overflow-hidden rounded-[2rem] border-[#ead4c5] bg-[#fffdf8] shadow-xl shadow-[#8b5a2b]/10 dark:border-white/10 dark:bg-white/10">
+                <CardContent className="p-3 md:p-4">
+                  <img
+                    src="/images/ai-face-reading-effect.jpg"
+                    alt="AI 面相玄学分析报告效果图"
+                    className="w-full rounded-[1.5rem] object-cover"
+                  />
+                </CardContent>
+              </Card>
+
+              <Card className="rounded-[2rem] border-[#ffd7df] bg-white/90 shadow-sm dark:border-white/10 dark:bg-white/10">
+                <CardContent className="space-y-5 p-6 md:p-8">
+                  <div>
+                    <div className="mb-3 inline-flex rounded-full bg-[#ff2442] px-3 py-1 text-xs font-bold text-white">
+                      可直接复制使用
+                    </div>
+                    <h3 className="text-2xl font-black">
+                      东方玄学面相报告提示词
+                    </h3>
+                    <p className="mt-3 leading-7 text-[#765f59] dark:text-[#dec8c0]">
+                      使用方法：先上传一张清晰人像图，再把下面提示词发给 AI
+                      生图工具，生成类似右侧的信息图海报。
+                    </p>
+                  </div>
+
+                  <pre className="max-h-[560px] overflow-auto rounded-3xl bg-[#2b1b18] p-5 text-left text-sm leading-7 text-[#fff7f4] shadow-inner whitespace-pre-wrap">
+                    {faceReadingPrompt}
+                  </pre>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
