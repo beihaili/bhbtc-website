@@ -22,7 +22,7 @@ export default function Navigation() {
 
   const navItems = [
     { path: "/", label: "首页" },
-    { path: "/ai", label: "AI案例库" },
+    { path: "/ai", label: "AI资料" },
     { path: "/projects", label: "项目" },
     { path: "/blog", label: "博客" },
     { path: "/about", label: "关于" },
