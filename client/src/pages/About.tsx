@@ -1,272 +1,259 @@
-/*
-Page: About
-Design: Personal introduction with timeline and values
-- Profile section with avatar
-- Timeline of journey
-- Core values and beliefs
-*/
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import BTCDonation from "@/components/BTCDonation";
-import { Heart, Users, Lightbulb, Target, Github, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowRight,
+  Github,
+  Heart,
+  Lightbulb,
+  Target,
+  Twitter,
+  Users,
+} from "lucide-react";
+
+const values = [
+  {
+    icon: Heart,
+    title: "开源精神",
+    description:
+      "相信知识应该自由流动，相信协作的力量。通过开源项目，让更多人受益于技术进步。",
+  },
+  {
+    icon: Lightbulb,
+    title: "理想主义",
+    description:
+      "比特币不仅是技术，更是一种关于去中心化、抗审查和个人主权的长期信念。",
+  },
+  {
+    icon: Users,
+    title: "教育为本",
+    description:
+      "降低学习门槛，用通俗易懂的方式讲解复杂概念，让新人可以真正参与进来。",
+  },
+  {
+    icon: Target,
+    title: "长期主义",
+    description: "不追逐短期热点，专注于能穿越周期的技术、写作和公共知识沉淀。",
+  },
+];
+
+const timeline = [
+  {
+    year: "2021",
+    title: "进入 Web3 世界",
+    description: "开始深入学习比特币和区块链技术，被去中心化理念吸引。",
+  },
+  {
+    year: "2023",
+    title: "创建教育项目",
+    description: "启动 Get Started with Web3，帮助更多新人从零入门。",
+  },
+  {
+    year: "2024",
+    title: "撰写比特币通史",
+    description: "开始《比特币那些事儿》，用叙事方式梳理比特币历史。",
+  },
+  {
+    year: "2025",
+    title: "深入 Bitcoin Core",
+    description:
+      "参与 Chaincode Labs BOSS Challenge，系统学习底层协议，向 Bitcoin Contributor 迈进。",
+  },
+];
+
+const skills = [
+  "Bitcoin Core",
+  "Taproot / Schnorr",
+  "闪电网络",
+  "密码学",
+  "UTXO 模型",
+  "比特币历史研究",
+  "技术写作",
+  "开源项目管理",
+  "React 开发",
+  "Web3 教育",
+];
 
 export default function About() {
-  const values = [
-    {
-      icon: Heart,
-      title: "开源精神",
-      description: "相信知识应该自由流动，相信协作的力量。通过开源项目，让更多人受益于技术的进步。",
-    },
-    {
-      icon: Lightbulb,
-      title: "理想主义",
-      description: "比特币不仅是技术，更是一种理想。去中心化、抗审查、个人主权，这些理念值得传播。",
-    },
-    {
-      icon: Users,
-      title: "教育为本",
-      description: "降低学习门槛，用通俗易懂的方式讲解复杂概念。让每个人都能理解并参与到这场革命中。",
-    },
-    {
-      icon: Target,
-      title: "长期主义",
-      description: "币本位思维，坚持长期价值。不追逐短期热点，专注于真正有意义的事情。",
-    },
-  ];
-
-  const timeline = [
-    {
-      year: "2021",
-      title: "进入 Web3 世界",
-      description: "开始深入学习比特币和区块链技术，被去中心化的理念深深吸引。",
-    },
-    {
-      year: "2023",
-      title: "创建教育项目",
-      description: "启动《Get Started with Web3》项目，帮助更多新人入门 Web3。",
-    },
-    {
-      year: "2024",
-      title: "撰写比特币通史",
-      description: "开始《比特币那些事儿》的写作，用叙事的方式讲述比特币历史。",
-    },
-    {
-      year: "2025",
-      title: "深入 Bitcoin Core",
-      description: "参与 Chaincode Labs BOSS Challenge，系统学习比特币底层协议，从 Taproot、UTXO 模型到闪电网络，向 Bitcoin Contributor 迈进。",
-    },
-  ];
-
-  const skills = [
-    "Bitcoin Core",
-    "Taproot / Schnorr",
-    "闪电网络",
-    "密码学",
-    "UTXO 模型",
-    "比特币历史研究",
-    "技术写作",
-    "开源项目管理",
-    "React 开发",
-    "Web3 教育",
-  ];
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="site-page">
       <Navigation />
 
-      {/* Page Header */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-card/30 to-transparent"></div>
-        <div className="container relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-              关于我
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              币本位 · 比特币开发者 · 教育者
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Profile Section */}
-      <section className="py-12">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <Card className="border-border/50">
-              <CardContent className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                  {/* Avatar */}
-                  <div className="flex-shrink-0">
-                    <div className="relative">
-                      <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary/50 shadow-lg shadow-primary/20">
-                        <img 
-                          src="/images/profile-avatar.png" 
-                          alt="北海" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg">
-                        <span className="text-3xl">₿</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex-1 space-y-6 text-center md:text-left">
-                    <div>
-                      <h2 className="text-3xl font-bold mb-2">北海 (bhbtc)</h2>
-                      <p className="text-lg text-muted-foreground">比特币开发者 · 教育者</p>
-                    </div>
-
-                    <p className="text-base text-muted-foreground leading-relaxed">
-                      我是北海，正在从 Bitcoin Holder 进化为 Bitcoin Contributor。
-                      参与 Chaincode Labs BOSS Challenge，死磕 Bitcoin Core 底层协议，
-                      从 Taproot、Schnorr 签名到闪电网络，用代码读懂比特币的每一层设计。
-                      坚信代码即信任，相信数学比任何机构都可靠。
-                    </p>
-
-                    <p className="text-base text-muted-foreground leading-relaxed">
-                      通过《比特币那些事儿》和《Get Started with Web3》两个开源项目，
-                      用叙事和教程让更多人读懂比特币的历史与技术，掌握自己的私钥，
-                      成为这场技术革命的参与者而非旁观者。
-                    </p>
-
-                    {/* Social Links */}
-                    <div className="flex items-center gap-3 justify-center md:justify-start pt-2">
-                      <Button variant="outline" size="sm" className="gap-2" asChild>
-                        <a href="https://github.com/beihaili" target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4" />
-                          GitHub
-                        </a>
-                      </Button>
-                      <Button variant="outline" size="sm" className="gap-2" asChild>
-                        <a href="https://x.com/bhbtc1337" target="_blank" rel="noopener noreferrer">
-                          <Twitter className="w-4 h-4" />
-                          Twitter
-                        </a>
-                      </Button>
-                    </div>
+      <main className="flex-1 overflow-hidden">
+        <section className="relative overflow-hidden pt-32 pb-16 md:pt-36 md:pb-24">
+          <img
+            src="/images/bitcoin-abstract.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/[0.82] via-background/[0.94] to-background" />
+          <div className="container relative z-10">
+            <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
+              <div className="mx-auto w-full max-w-sm lg:mx-0">
+                <div className="relative overflow-hidden rounded-[2rem] border border-primary/20 bg-card/80 p-4 shadow-2xl shadow-primary/10 backdrop-blur">
+                  <img
+                    src="/images/profile-avatar.png"
+                    alt="北海"
+                    className="aspect-square w-full rounded-[1.5rem] object-cover"
+                  />
+                  <div className="absolute bottom-7 left-7 rounded-full bg-primary px-4 py-2 text-sm font-black text-primary-foreground shadow-lg">
+                    ₿ bhbtc
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+              </div>
 
-      {/* Core Values */}
-      <section className="py-12">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">核心价值观</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {values.map((value) => (
-                <Card key={value.title} className="border-border/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <value.icon className="w-6 h-6 text-primary" />
+              <div>
+                <div className="section-kicker mb-5">
+                  <Target className="h-4 w-4" />
+                  关于我
+                </div>
+                <h1 className="max-w-3xl text-4xl font-black leading-tight md:text-6xl">
+                  从 Bitcoin Holder 到 Bitcoin Contributor
+                </h1>
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground">
+                  我是北海，参与 Chaincode Labs BOSS Challenge，死磕 Bitcoin
+                  Core 底层协议。从 Taproot、Schnorr
+                  签名到闪电网络，用代码读懂比特币的每一层设计。
+                  坚信代码即信任，相信数学比任何机构都可靠。
+                </p>
+                <p className="mt-4 max-w-3xl leading-8 text-muted-foreground">
+                  通过《比特币那些事儿》和《Get Started with
+                  Web3》两个开源项目，我希望用叙事和教程让更多人读懂比特币历史与技术，
+                  掌握自己的私钥，成为技术革命的参与者而非旁观者。
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button className="rounded-full" asChild>
+                    <a
+                      href="https://github.com/beihaili"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github className="mr-2 h-4 w-4" />
+                      GitHub
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="rounded-full" asChild>
+                    <a
+                      href="https://x.com/bhbtc1337"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Twitter className="mr-2 h-4 w-4" />
+                      Twitter
+                    </a>
+                  </Button>
+                  <BTCDonation />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <div className="section-kicker mb-4">
+                <Heart className="h-4 w-4" />
+                核心价值观
+              </div>
+              <h2 className="text-3xl font-black md:text-5xl">
+                做长期、可信、可被复用的内容
+              </h2>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              {values.map(value => {
+                const Icon = value.icon;
+                return (
+                  <div
+                    key={value.title}
+                    className="elevated-card rounded-3xl p-6"
+                  >
+                    <div className="flex gap-5">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+                        <Icon className="h-6 w-6" />
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
+                      <div>
+                        <h3 className="text-xl font-black">{value.title}</h3>
+                        <p className="mt-3 leading-7 text-muted-foreground">
                           {value.description}
                         </p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Timeline */}
-      <section className="py-12 bg-card/30">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">我的旅程</h2>
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border"></div>
+        <section className="bg-card/35 py-16 md:py-24">
+          <div className="container">
+            <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <div className="lg:sticky lg:top-28">
+                <div className="section-kicker mb-4">
+                  <ArrowRight className="h-4 w-4" />
+                  我的旅程
+                </div>
+                <h2 className="text-3xl font-black md:text-5xl">
+                  从学习者到贡献者，路径越来越清晰
+                </h2>
+                <p className="mt-5 leading-8 text-muted-foreground">
+                  这不是简历时间线，更像是一个长期学习系统：每一年都把一个新问题拆开，
+                  再把拆开的过程写出来、开源出来。
+                </p>
+              </div>
 
-              {/* Timeline Items */}
-              <div className="space-y-8">
-                {timeline.map((item, index) => (
-                  <div key={item.year} className="relative pl-20">
-                    {/* Year Badge */}
-                    <div className="absolute left-0 w-16 h-16 rounded-full bg-primary/10 border-4 border-background flex items-center justify-center">
-                      <span className="text-sm font-bold text-primary">{item.year}</span>
+              <div className="space-y-4">
+                {timeline.map(item => (
+                  <div
+                    key={item.year}
+                    className="grid gap-4 rounded-3xl border border-border/60 bg-background/55 p-5 md:grid-cols-[7rem_1fr]"
+                  >
+                    <div className="text-3xl font-black text-primary">
+                      {item.year}
                     </div>
-
-                    {/* Content */}
-                    <Card className="border-border/50">
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
-                      </CardContent>
-                    </Card>
+                    <div>
+                      <h3 className="text-xl font-black">{item.title}</h3>
+                      <p className="mt-2 leading-7 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Skills */}
-      <section className="py-12">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">技能与专长</h2>
-            <div className="flex flex-wrap justify-center gap-3">
-              {skills.map((skill) => (
-                <Badge 
-                  key={skill} 
-                  variant="secondary" 
-                  className="text-sm px-4 py-2 hover:bg-primary/10 hover:text-primary transition-colors cursor-default"
-                >
-                  {skill}
-                </Badge>
-              ))}
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="section-kicker mb-4">
+                <Lightbulb className="h-4 w-4" />
+                技能与专长
+              </div>
+              <h2 className="text-3xl font-black md:text-5xl">
+                技术栈围绕比特币、写作和产品化表达展开
+              </h2>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                {skills.map(skill => (
+                  <Badge
+                    key={skill}
+                    variant="secondary"
+                    className="rounded-full px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="py-20 bg-card/30">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl font-bold">保持联系</h2>
-            <p className="text-lg text-muted-foreground">
-              如果你对比特币、Web3 或我的项目感兴趣，
-              欢迎在 GitHub 或 Twitter 上关注我，一起交流学习。
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button size="lg" variant="default" className="gap-2" asChild>
-                <a href="https://github.com/beihaili" target="_blank" rel="noopener noreferrer">
-                  <Github className="w-5 h-5" />
-                  GitHub
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="gap-2" asChild>
-                <a href="https://x.com/bhbtc1337" target="_blank" rel="noopener noreferrer">
-                  <Twitter className="w-5 h-5" />
-                  Twitter
-                </a>
-              </Button>
-              <BTCDonation />
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

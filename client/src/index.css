@@ -5,11 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-Design Philosophy: Minimal & Refined
-- Clean, minimal aesthetic with Bitcoin orange as brand color
-- Space Grotesk for headings (geometric, technical precision)
-- Inter for body text (excellent readability)
-- Supports light / dark mode with smooth theme transitions
+Design Philosophy: editorial technical portfolio
+- Warm dark canvas with Bitcoin orange, rose, and cyan accents
+- Large photographic sections for product/person context
+- Dense but readable cards for projects, writing, and contact flows
 */
 
 @theme inline {
@@ -54,37 +53,37 @@ Design Philosophy: Minimal & Refined
 /* Light mode (default) */
 :root {
   /* Bitcoin Orange as primary */
-  --primary: oklch(0.62 0.16 45);
+  --primary: oklch(0.62 0.17 42);
   --primary-foreground: oklch(0.99 0 0);
 
-  /* Slate accent */
-  --accent: oklch(0.94 0.01 240);
-  --accent-foreground: oklch(0.2 0.02 240);
+  /* Cool accent for contrast */
+  --accent: oklch(0.92 0.035 195);
+  --accent-foreground: oklch(0.19 0.035 220);
 
-  /* Clean white background */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.15 0.01 240);
+  /* Warm paper background */
+  --background: oklch(0.985 0.012 60);
+  --foreground: oklch(0.15 0.02 28);
 
-  /* Card with very subtle warm tint */
-  --card: oklch(0.97 0.005 240);
-  --card-foreground: oklch(0.15 0.01 240);
+  /* Card with subtle warm tint */
+  --card: oklch(0.965 0.015 55);
+  --card-foreground: oklch(0.15 0.02 28);
 
-  --popover: oklch(0.99 0 0);
-  --popover-foreground: oklch(0.15 0.01 240);
+  --popover: oklch(0.99 0.008 55);
+  --popover-foreground: oklch(0.15 0.02 28);
 
   /* Subtle secondary */
-  --secondary: oklch(0.94 0.01 240);
-  --secondary-foreground: oklch(0.25 0.02 240);
+  --secondary: oklch(0.94 0.02 55);
+  --secondary-foreground: oklch(0.25 0.025 28);
 
-  --muted: oklch(0.95 0.005 240);
-  --muted-foreground: oklch(0.5 0.01 240);
+  --muted: oklch(0.94 0.018 55);
+  --muted-foreground: oklch(0.48 0.025 28);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.88 0.01 240);
-  --input: oklch(0.92 0.01 240);
-  --ring: oklch(0.62 0.16 45);
+  --border: oklch(0.86 0.025 55);
+  --input: oklch(0.9 0.02 55);
+  --ring: oklch(0.62 0.17 42);
 
   --sidebar: oklch(0.97 0.005 240);
   --sidebar-foreground: oklch(0.15 0.01 240);
@@ -95,9 +94,9 @@ Design Philosophy: Minimal & Refined
   --sidebar-border: oklch(0.88 0.01 240);
   --sidebar-ring: oklch(0.62 0.16 45);
 
-  --chart-1: oklch(0.62 0.16 45);
-  --chart-2: oklch(0.55 0.12 230);
-  --chart-3: oklch(0.45 0.15 285);
+  --chart-1: oklch(0.62 0.17 42);
+  --chart-2: oklch(0.62 0.12 195);
+  --chart-3: oklch(0.58 0.18 352);
   --chart-4: oklch(0.6 0.12 160);
   --chart-5: oklch(0.5 0.13 330);
 
@@ -107,37 +106,37 @@ Design Philosophy: Minimal & Refined
 /* Dark mode */
 .dark {
   /* Bitcoin Orange as primary */
-  --primary: oklch(0.68 0.18 45);
+  --primary: oklch(0.7 0.19 42);
   --primary-foreground: oklch(0.98 0 0);
 
-  /* Muted Blue as accent */
-  --accent: oklch(0.25 0.02 240);
-  --accent-foreground: oklch(0.95 0.01 240);
+  /* Cool accent */
+  --accent: oklch(0.25 0.045 200);
+  --accent-foreground: oklch(0.95 0.012 200);
 
-  /* Deep Navy background */
-  --background: oklch(0.13 0.02 240);
-  --foreground: oklch(0.92 0.01 240);
+  /* Warm graphite background */
+  --background: oklch(0.105 0.025 28);
+  --foreground: oklch(0.95 0.012 62);
 
   /* Card with slight elevation */
-  --card: oklch(0.16 0.02 240);
-  --card-foreground: oklch(0.92 0.01 240);
+  --card: oklch(0.17 0.025 28);
+  --card-foreground: oklch(0.95 0.012 62);
 
-  --popover: oklch(0.16 0.02 240);
-  --popover-foreground: oklch(0.92 0.01 240);
+  --popover: oklch(0.17 0.025 28);
+  --popover-foreground: oklch(0.95 0.012 62);
 
   /* Subtle secondary */
-  --secondary: oklch(0.25 0.02 240);
-  --secondary-foreground: oklch(0.92 0.01 240);
+  --secondary: oklch(0.23 0.025 28);
+  --secondary-foreground: oklch(0.95 0.012 62);
 
-  --muted: oklch(0.22 0.02 240);
-  --muted-foreground: oklch(0.6 0.01 240);
+  --muted: oklch(0.22 0.023 28);
+  --muted-foreground: oklch(0.72 0.02 62);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.28 0.02 240);
-  --input: oklch(0.22 0.02 240);
-  --ring: oklch(0.68 0.18 45);
+  --border: oklch(0.29 0.027 28);
+  --input: oklch(0.22 0.023 28);
+  --ring: oklch(0.7 0.19 42);
 
   --sidebar: oklch(0.16 0.02 240);
   --sidebar-foreground: oklch(0.92 0.01 240);
@@ -148,9 +147,9 @@ Design Philosophy: Minimal & Refined
   --sidebar-border: oklch(0.28 0.02 240);
   --sidebar-ring: oklch(0.68 0.18 45);
 
-  --chart-1: oklch(0.68 0.18 45);
-  --chart-2: oklch(0.75 0.12 195);
-  --chart-3: oklch(0.55 0.15 285);
+  --chart-1: oklch(0.7 0.19 42);
+  --chart-2: oklch(0.76 0.12 195);
+  --chart-3: oklch(0.66 0.18 352);
   --chart-4: oklch(0.7 0.12 160);
   --chart-5: oklch(0.6 0.13 330);
 }
@@ -159,21 +158,47 @@ Design Philosophy: Minimal & Refined
   * {
     @apply border-border outline-ring/50;
   }
-  
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-image:
+      linear-gradient(180deg, oklch(0.18 0.03 28 / 0.04), transparent 34rem),
+      linear-gradient(90deg, oklch(0.7 0.19 42 / 0.04), transparent 45%);
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  .dark body {
+    background-image:
+      linear-gradient(180deg, oklch(0.22 0.045 28 / 0.65), transparent 38rem),
+      linear-gradient(90deg, oklch(0.7 0.19 42 / 0.12), transparent 42%),
+      linear-gradient(270deg, oklch(0.76 0.12 195 / 0.08), transparent 50%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family:
+      "Space Grotesk",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
     font-weight: 700;
   }
-  
-  code, pre {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+
+  code,
+  pre {
+    font-family: "JetBrains Mono", "Courier New", monospace;
   }
-  
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -188,6 +213,41 @@ Design Philosophy: Minimal & Refined
 }
 
 @layer components {
+  .site-page {
+    @apply min-h-screen flex flex-col bg-background text-foreground;
+  }
+
+  .section-kicker {
+    @apply inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-bold text-primary;
+  }
+
+  .glass-panel {
+    @apply border border-white/10 bg-white/70 shadow-2xl shadow-black/5 backdrop-blur-xl dark:bg-white/[0.08] dark:shadow-black/20;
+  }
+
+  .elevated-card {
+    @apply border border-border/60 bg-card/90 shadow-lg shadow-black/5 transition-all duration-300 dark:bg-white/[0.08] dark:shadow-black/20;
+  }
+
+  .elevated-card:hover {
+    @apply -translate-y-1 border-primary/35 shadow-xl shadow-primary/10;
+  }
+
+  .hero-image-overlay {
+    background:
+      linear-gradient(
+        90deg,
+        oklch(0.08 0.025 28 / 0.95) 0%,
+        oklch(0.09 0.025 28 / 0.82) 42%,
+        oklch(0.09 0.025 28 / 0.36) 100%
+      ),
+      linear-gradient(
+        180deg,
+        oklch(0.08 0.025 28 / 0.3) 0%,
+        oklch(0.08 0.025 28 / 0.92) 100%
+      );
+  }
+
   .container {
     width: 100%;
     margin-left: auto;
@@ -215,16 +275,16 @@ Design Philosophy: Minimal & Refined
       max-width: 1280px;
     }
   }
-  
+
   /* Subtle text emphasis - removed excessive glow */
   .glow-orange {
     color: oklch(0.65 0.15 45);
   }
-  
+
   .glow-cyan {
     color: oklch(0.65 0.12 230);
   }
-  
+
   /* Animated gradient background */
   .gradient-animate {
     background: linear-gradient(
@@ -236,40 +296,46 @@ Design Philosophy: Minimal & Refined
     background-size: 200% 200%;
     animation: gradient 15s ease infinite;
   }
-  
+
   @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  
+
   /* Fade in animations */
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out;
   }
-  
+
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
   }
-  
+
   .animation-delay-200 {
     animation-delay: 0.2s;
     opacity: 0;
     animation-fill-mode: forwards;
   }
-  
+
   .animation-delay-400 {
     animation-delay: 0.4s;
     opacity: 0;
     animation-fill-mode: forwards;
   }
-  
+
   .animation-delay-600 {
     animation-delay: 0.6s;
     opacity: 0;
     animation-fill-mode: forwards;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -278,7 +344,7 @@ Design Philosophy: Minimal & Refined
       opacity: 1;
     }
   }
-  
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -298,44 +364,44 @@ Design Philosophy: Minimal & Refined
 
 /* Light mode prose */
 .prose {
-  --tw-prose-body:         oklch(0.15 0.01 240);
-  --tw-prose-headings:     oklch(0.15 0.01 240);
-  --tw-prose-lead:         oklch(0.5 0.01 240);
-  --tw-prose-links:        oklch(0.62 0.16 45);
-  --tw-prose-bold:         oklch(0.15 0.01 240);
-  --tw-prose-counters:     oklch(0.5 0.01 240);
-  --tw-prose-bullets:      oklch(0.5 0.01 240);
-  --tw-prose-hr:           oklch(0.88 0.01 240);
-  --tw-prose-quotes:       oklch(0.15 0.01 240);
+  --tw-prose-body: oklch(0.15 0.01 240);
+  --tw-prose-headings: oklch(0.15 0.01 240);
+  --tw-prose-lead: oklch(0.5 0.01 240);
+  --tw-prose-links: oklch(0.62 0.16 45);
+  --tw-prose-bold: oklch(0.15 0.01 240);
+  --tw-prose-counters: oklch(0.5 0.01 240);
+  --tw-prose-bullets: oklch(0.5 0.01 240);
+  --tw-prose-hr: oklch(0.88 0.01 240);
+  --tw-prose-quotes: oklch(0.15 0.01 240);
   --tw-prose-quote-borders: oklch(0.62 0.16 45);
-  --tw-prose-captions:     oklch(0.5 0.01 240);
-  --tw-prose-kbd:          oklch(0.15 0.01 240);
-  --tw-prose-code:         oklch(0.15 0.01 240);
-  --tw-prose-pre-code:     oklch(0.92 0.01 240);
-  --tw-prose-pre-bg:       oklch(0.16 0.02 240);
-  --tw-prose-th-borders:   oklch(0.88 0.01 240);
-  --tw-prose-td-borders:   oklch(0.92 0.005 240);
+  --tw-prose-captions: oklch(0.5 0.01 240);
+  --tw-prose-kbd: oklch(0.15 0.01 240);
+  --tw-prose-code: oklch(0.15 0.01 240);
+  --tw-prose-pre-code: oklch(0.92 0.01 240);
+  --tw-prose-pre-bg: oklch(0.16 0.02 240);
+  --tw-prose-th-borders: oklch(0.88 0.01 240);
+  --tw-prose-td-borders: oklch(0.92 0.005 240);
 }
 
 /* Dark mode prose (used with prose-invert or inside .dark) */
 .prose-invert,
 .dark .prose {
-  --tw-prose-body:         oklch(0.92 0.01 240);
-  --tw-prose-headings:     oklch(0.95 0.01 240);
-  --tw-prose-lead:         oklch(0.6 0.01 240);
-  --tw-prose-links:        oklch(0.68 0.18 45);
-  --tw-prose-bold:         oklch(0.95 0.01 240);
-  --tw-prose-counters:     oklch(0.6 0.01 240);
-  --tw-prose-bullets:      oklch(0.45 0.02 240);
-  --tw-prose-hr:           oklch(0.28 0.02 240);
-  --tw-prose-quotes:       oklch(0.92 0.01 240);
+  --tw-prose-body: oklch(0.92 0.01 240);
+  --tw-prose-headings: oklch(0.95 0.01 240);
+  --tw-prose-lead: oklch(0.6 0.01 240);
+  --tw-prose-links: oklch(0.68 0.18 45);
+  --tw-prose-bold: oklch(0.95 0.01 240);
+  --tw-prose-counters: oklch(0.6 0.01 240);
+  --tw-prose-bullets: oklch(0.45 0.02 240);
+  --tw-prose-hr: oklch(0.28 0.02 240);
+  --tw-prose-quotes: oklch(0.92 0.01 240);
   --tw-prose-quote-borders: oklch(0.68 0.18 45);
-  --tw-prose-captions:     oklch(0.6 0.01 240);
-  --tw-prose-code:         oklch(0.92 0.01 240);
-  --tw-prose-pre-code:     oklch(0.88 0.01 240);
-  --tw-prose-pre-bg:       oklch(0.10 0.02 240);
-  --tw-prose-th-borders:   oklch(0.28 0.02 240);
-  --tw-prose-td-borders:   oklch(0.22 0.02 240);
+  --tw-prose-captions: oklch(0.6 0.01 240);
+  --tw-prose-code: oklch(0.92 0.01 240);
+  --tw-prose-pre-code: oklch(0.88 0.01 240);
+  --tw-prose-pre-bg: oklch(0.1 0.02 240);
+  --tw-prose-th-borders: oklch(0.28 0.02 240);
+  --tw-prose-td-borders: oklch(0.22 0.02 240);
 }
 
 /* Shared prose element styles */
@@ -345,7 +411,12 @@ Design Philosophy: Minimal & Refined
 .prose h4,
 .prose h5,
 .prose h6 {
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Space Grotesk",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   scroll-margin-top: 5rem; /* offset for sticky nav */
 }
 
@@ -357,7 +428,9 @@ Design Philosophy: Minimal & Refined
 .prose a {
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
 }
 
 /* Inline code — pill style */
@@ -381,7 +454,7 @@ Design Philosophy: Minimal & Refined
 }
 
 .prose pre code {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
 }
 
 /* Blockquote — left-accent card style */

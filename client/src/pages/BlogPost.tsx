@@ -1,36 +1,32 @@
-/*
-Page: BlogPost
-Design: Clean article reading experience
-- Full article content with markdown rendering
-- Author info and metadata
-- Giscus comments and BTC donation
-- Related posts suggestions
-*/
-
-import { useRoute, Link } from "wouter";
 import { useEffect, useRef, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Link, useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import GiscusComments from "@/components/GiscusComments";
 import BTCDonation from "@/components/BTCDonation";
 import TableOfContents, { type TocItem } from "@/components/TableOfContents";
-import { Calendar, Clock, ArrowLeft, Tag, Share2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Clock,
+  Share2,
+  Tag,
+} from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { Streamdown } from "streamdown";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 
-/** Convert heading text to a URL-safe slug for anchor IDs. */
 function slugify(text: string): string {
   return text
     .trim()
     .toLowerCase()
-    .replace(/[\s\u3000]+/g, "-")         // spaces → dash
-    .replace(/[^\w\u4e00-\u9fff-]/g, "")  // keep word chars, CJK, dashes
-    .replace(/^-+|-+$/g, "");             // trim leading/trailing dashes
+    .replace(/[\s\u3000]+/g, "-")
+    .replace(/[^\w\u4e00-\u9fff-]/g, "")
+    .replace(/^-+|-+$/g, "");
 }
 
 export default function BlogPost() {
@@ -40,51 +36,49 @@ export default function BlogPost() {
   const articleRef = useRef<HTMLDivElement>(null);
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
 
-  // After Streamdown renders, collect h2/h3 elements, assign id attributes,
-  // and build the TOC item list.
   useEffect(() => {
     if (!articleRef.current || !post) return;
 
-    // Small timeout allows Streamdown streaming output to finish.
     const timer = setTimeout(() => {
       if (!articleRef.current) return;
-      const headings = articleRef.current.querySelectorAll<HTMLElement>("h2, h3");
+      const headings =
+        articleRef.current.querySelectorAll<HTMLElement>("h2, h3");
       const items: TocItem[] = [];
       const seen = new Map<string, number>();
 
-      headings.forEach((heading) => {
+      headings.forEach(heading => {
         const text = heading.textContent ?? "";
         let id = slugify(text) || "heading";
-
-        // Deduplicate slugs (e.g. two sections with same name)
         const count = seen.get(id) ?? 0;
+
         seen.set(id, count + 1);
         if (count > 0) id = `${id}-${count}`;
 
         heading.id = id;
-        const level = parseInt(heading.tagName[1], 10);
-        items.push({ level, text, id });
+        items.push({ level: parseInt(heading.tagName[1], 10), text, id });
       });
 
       setTocItems(items);
     }, 80);
 
     return () => clearTimeout(timer);
-  }, [post?.id]);
+  }, [post]);
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="site-page">
         <Navigation />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold">文章未找到</h1>
-            <p className="text-muted-foreground">抱歉,您访问的文章不存在</p>
-            <Button asChild>
+        <main className="flex flex-1 items-center justify-center px-4">
+          <div className="max-w-md text-center">
+            <h1 className="text-4xl font-black">文章未找到</h1>
+            <p className="mt-4 text-muted-foreground">
+              抱歉，您访问的文章不存在
+            </p>
+            <Button className="mt-6 rounded-full" asChild>
               <Link href="/blog">返回博客列表</Link>
             </Button>
           </div>
-        </div>
+        </main>
         <Footer />
       </div>
     );
@@ -100,158 +94,176 @@ export default function BlogPost() {
     .slice(0, 2);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="site-page">
       <Navigation />
 
-      {/* Article */}
-      <article className="pt-32 pb-20">
-        <div className="container">
-          {/* Two-column layout: article + sticky TOC on xl+ screens */}
-          <div className="flex gap-10 justify-center">
+      <main className="flex-1 overflow-hidden">
+        <section className="relative overflow-hidden pt-28 pb-12 md:pt-36 md:pb-16">
+          <img
+            src="/images/bitcoin-history-bg.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.28]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/[0.82] via-background/[0.94] to-background" />
 
-            {/* Main Article Column */}
-            <div className="w-full max-w-3xl min-w-0">
-              {/* Back Button */}
-              <Button variant="ghost" size="sm" className="gap-2 mb-8 -ml-2" asChild>
+          <div className="container relative z-10">
+            <div className="mx-auto max-w-4xl">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mb-8 rounded-full"
+                asChild
+              >
                 <Link href="/blog">
-                  <ArrowLeft className="w-4 h-4" />
+                  <ArrowLeft className="mr-2 h-4 w-4" />
                   返回博客
                 </Link>
               </Button>
 
-              {/* Metadata */}
-              <div className="flex flex-wrap items-center gap-3 mb-6">
-                <Badge variant="secondary">{post.category}</Badge>
-                <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="w-3.5 h-3.5" />
+              <div className="mb-5 flex flex-wrap items-center gap-3">
+                <Badge variant="secondary" className="rounded-full">
+                  {post.category}
+                </Badge>
+                <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
                   {post.date}
                 </span>
-                <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Clock className="w-3.5 h-3.5" />
+                <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Clock className="h-4 w-4" />
                   {post.readTime}
                 </span>
               </div>
 
-              {/* Title */}
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl font-black leading-tight md:text-6xl">
                 {post.title}
               </h1>
-
-              {/* Excerpt */}
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">
                 {post.excerpt}
               </p>
 
-              {/* Author & Actions */}
-              <div className="flex items-center justify-between pb-8 mb-8 border-b border-border">
+              <div className="mt-8 flex flex-col gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
                   <img
                     src={post.author.avatar}
                     alt={post.author.name}
-                    className="w-11 h-11 rounded-full border-2 border-primary/20"
+                    className="h-12 w-12 rounded-full border-2 border-primary/25"
                   />
                   <div>
-                    <p className="font-semibold text-sm">{post.author.name}</p>
-                    <p className="text-xs text-muted-foreground">作者</p>
+                    <p className="font-black">{post.author.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      比特币开发者 · 教育者
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap gap-2">
                   <BTCDonation />
-                  <Button variant="outline" size="sm" className="gap-2" onClick={handleShare}>
-                    <Share2 className="w-4 h-4" />
+                  <Button
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={handleShare}
+                  >
+                    <Share2 className="mr-2 h-4 w-4" />
                     分享
                   </Button>
                 </div>
               </div>
-
-              {/* Article Content */}
-              <div
-                ref={articleRef}
-                className={`prose prose-lg max-w-none ${theme === "dark" ? "prose-invert" : ""}`}
-              >
-                <Streamdown>{post.content}</Streamdown>
-              </div>
-
-              {/* Tags */}
-              <div className="mt-12 pt-8 border-t border-border">
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map(tag => (
-                    <Badge key={tag} variant="outline" className="text-sm">
-                      <Tag className="w-3 h-3 mr-1" />
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* BTC Donation — inline card */}
-              <div className="mt-10 p-6 rounded-xl border border-primary/20 bg-primary/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <p className="font-semibold text-sm">觉得有帮助？</p>
-                  <p className="text-sm text-muted-foreground">用 BTC 打赏支持作者继续创作</p>
-                </div>
-                <BTCDonation />
-              </div>
-
-              {/* Giscus Comments */}
-              <GiscusComments />
             </div>
-
-            {/* TOC Sidebar — visible only on xl+ and when TOC has items */}
-            {tocItems.length > 0 && (
-              <aside className="hidden xl:block w-52 shrink-0">
-                <div className="sticky top-32 max-h-[calc(100vh-9rem)] overflow-y-auto pb-4">
-                  <TableOfContents items={tocItems} />
-                </div>
-              </aside>
-            )}
-
           </div>
-        </div>
-      </article>
+        </section>
 
-      {/* Related Posts */}
-      {relatedPosts.length > 0 && (
-        <section className="py-20 bg-muted/30">
+        <section className="pb-20">
           <div className="container">
-            <div className="max-w-5xl mx-auto">
-              <h2 className="text-2xl font-bold mb-8">相关文章</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {relatedPosts.map((relatedPost) => (
-                  <Card
-                    key={relatedPost.id}
-                    className="group hover:shadow-md transition-all duration-200 border-border/60"
-                  >
-                    <CardContent className="p-6">
-                      <Badge variant="secondary" className="mb-3">
+            <div className="flex justify-center gap-10">
+              <article className="w-full max-w-3xl rounded-[2rem] border border-border/60 bg-card/[0.82] p-6 shadow-2xl shadow-black/5 backdrop-blur md:p-9 dark:bg-white/[0.08]">
+                <div
+                  ref={articleRef}
+                  className={`prose prose-lg max-w-none ${
+                    theme === "dark" ? "prose-invert" : ""
+                  }`}
+                >
+                  <Streamdown>{post.content}</Streamdown>
+                </div>
+
+                <div className="mt-12 border-t border-border pt-8">
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map(tag => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="rounded-full"
+                      >
+                        <Tag className="mr-1 h-3 w-3" />
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-3xl border border-primary/20 bg-primary/[0.07] p-6 sm:flex-row sm:items-center">
+                  <div>
+                    <p className="font-black">觉得有帮助？</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      用 BTC 打赏支持作者继续创作
+                    </p>
+                  </div>
+                  <BTCDonation />
+                </div>
+
+                <GiscusComments />
+              </article>
+
+              {tocItems.length > 0 && (
+                <aside className="hidden w-56 shrink-0 xl:block">
+                  <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-border/60 bg-card/[0.72] p-4 backdrop-blur dark:bg-white/[0.08]">
+                    <TableOfContents items={tocItems} />
+                  </div>
+                </aside>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {relatedPosts.length > 0 && (
+          <section className="bg-card/35 py-20">
+            <div className="container">
+              <div className="mx-auto max-w-5xl">
+                <h2 className="mb-8 text-3xl font-black">相关文章</h2>
+                <div className="grid gap-5 md:grid-cols-2">
+                  {relatedPosts.map(relatedPost => (
+                    <article
+                      key={relatedPost.id}
+                      className="elevated-card rounded-3xl p-6"
+                    >
+                      <Badge variant="secondary" className="mb-4 rounded-full">
                         {relatedPost.category}
                       </Badge>
-                      <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">
+                      <h3 className="text-xl font-black leading-tight transition-colors hover:text-primary">
                         <Link href={`/blog/${relatedPost.id}`}>
                           {relatedPost.title}
                         </Link>
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      <p className="mt-4 line-clamp-2 leading-7 text-muted-foreground">
                         {relatedPost.excerpt}
                       </p>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {relatedPost.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {relatedPost.readTime}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <Button
+                        variant="ghost"
+                        className="mt-5 rounded-full px-0 text-primary hover:px-4"
+                        asChild
+                      >
+                        <Link href={`/blog/${relatedPost.id}`}>
+                          继续阅读
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
+      </main>
 
       <Footer />
     </div>
