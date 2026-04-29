@@ -68,7 +68,7 @@ const lanes = [
   {
     icon: RadioTower,
     title: "AI 内容实验",
-    text: "把优质 X 灵感改造成小红书案例库，持续测试传播效率。",
+    text: "把 AI 工具玩法整理成普通人能直接上手的小红书案例库。",
   },
 ];
 
