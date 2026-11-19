@@ -1,33 +1,50 @@
-/*
-Component: Navigation
-Design: Minimal refined navigation
-- Fixed top navigation with backdrop blur
-- Bitcoin orange active states
-- Theme toggle with Sun/Moon animation
-- Mobile: Sheet drawer with hamburger menu
-*/
-
-import { Link, useLocation } from "wouter";
+import { useState } from "react";
+import { Link, useLocation, useSearch } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Github, Twitter, Sun, Moon, Menu } from "lucide-react";
+import { Github, Menu, Moon, Sun, Twitter } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+const primaryNav = [
+  { href: "/", label: "首页", id: "home" },
+  { href: "/blog?pillar=bitcoin", label: "比特币", id: "bitcoin" },
+  { href: "/blog", label: "写作", id: "writing" },
+  { href: "/ai", label: "AI", id: "ai" },
+  { href: "/about", label: "关于", id: "about" },
+];
+
+const secondaryNav = [
+  { href: "/projects", label: "项目", id: "projects" },
+  { href: "/contact", label: "联系", id: "contact" },
+];
+
+function isActive(id: string, location: string, search: string) {
+  const pillar = new URLSearchParams(search).get("pillar");
+  const onBlogList = location === "/blog";
+  const onArticle = location.startsWith("/blog/");
+
+  if (id === "home") return location === "/";
+  if (id === "bitcoin") return onBlogList && pillar === "bitcoin";
+  if (id === "writing")
+    return onArticle || (onBlogList && pillar !== "bitcoin");
+  if (id === "ai") return location === "/ai";
+  if (id === "about") return location === "/about";
+  if (id === "projects") return location === "/projects";
+  if (id === "contact") return location === "/contact";
+  return false;
+}
 
 export default function Navigation() {
   const [location] = useLocation();
+  const search = useSearch();
   const { theme, toggleTheme, switchable } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = [
-    { path: "/", label: "首页" },
-    { path: "/ai", label: "AI资料" },
-    { path: "/projects", label: "项目" },
-    { path: "/blog", label: "博客" },
-    { path: "/about", label: "关于" },
-    { path: "/contact", label: "联系" },
-  ];
+  const itemClass = (id: string) =>
+    isActive(id, location, search)
+      ? "text-foreground"
+      : "text-muted-foreground hover:text-foreground";
 
   const ThemeToggle = () =>
     switchable ? (
@@ -35,31 +52,31 @@ export default function Navigation() {
         variant="ghost"
         size="icon"
         onClick={toggleTheme}
-        className="hover:bg-muted relative"
+        className="relative hover:bg-muted"
         aria-label="切换主题"
       >
         <AnimatePresence mode="wait" initial={false}>
           {theme === "dark" ? (
             <motion.span
               key="moon"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               className="absolute"
             >
-              <Moon className="w-4 h-4" />
+              <Moon className="h-4 w-4" />
             </motion.span>
           ) : (
             <motion.span
               key="sun"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               className="absolute"
             >
-              <Sun className="w-4 h-4" />
+              <Sun className="h-4 w-4" />
             </motion.span>
           )}
         </AnimatePresence>
@@ -67,51 +84,38 @@ export default function Navigation() {
     ) : null;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border transition-colors duration-300">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer group">
-              <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-lg font-bold text-primary-foreground">
-                  ₿
-                </span>
-              </div>
-              <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-200">
-                北海
-              </span>
-            </div>
+    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+      <div className="container">
+        <div className="flex h-14 items-center justify-between gap-4">
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="font-serif text-lg text-foreground">北海</span>
+            <span className="text-xs text-muted-foreground">bhbtc</span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-6">
-            {navItems.map(item => (
-              <Link key={item.path} href={item.path}>
-                <span
-                  className={`text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                    (
-                      item.path === "/"
-                        ? location === "/"
-                        : location.startsWith(item.path)
-                    )
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {item.label}
-                </span>
+          <div className="hidden items-center gap-5 md:flex">
+            {primaryNav.map(item => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`text-sm ${itemClass(item.id)}`}
+              >
+                {item.label}
               </Link>
             ))}
           </div>
 
-          {/* Right side: social + theme + mobile menu */}
           <div className="flex items-center gap-1">
+            <Link
+              href="/projects"
+              className={`mr-2 hidden text-sm md:inline ${itemClass("projects")}`}
+            >
+              项目
+            </Link>
             <Button
               variant="ghost"
               size="icon"
               asChild
-              className="hidden md:flex hover:text-primary hover:bg-muted"
+              className="hidden hover:bg-muted hover:text-primary md:flex"
             >
               <a
                 href="https://github.com/beihaili"
@@ -119,14 +123,14 @@ export default function Navigation() {
                 rel="noopener noreferrer"
                 aria-label="GitHub"
               >
-                <Github className="w-4 h-4" />
+                <Github className="h-4 w-4" />
               </a>
             </Button>
             <Button
               variant="ghost"
               size="icon"
               asChild
-              className="hidden md:flex hover:text-primary hover:bg-muted"
+              className="hidden hover:bg-muted hover:text-primary md:flex"
             >
               <a
                 href="https://x.com/bhbtc1337"
@@ -134,74 +138,65 @@ export default function Navigation() {
                 rel="noopener noreferrer"
                 aria-label="Twitter"
               >
-                <Twitter className="w-4 h-4" />
+                <Twitter className="h-4 w-4" />
               </a>
             </Button>
-
             <ThemeToggle />
 
-            {/* Mobile hamburger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden hover:bg-muted"
+                  className="hover:bg-muted md:hidden"
                   aria-label="菜单"
                 >
-                  <Menu className="w-5 h-5" />
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-64 pt-12">
                 <div className="flex flex-col gap-1">
-                  {navItems.map(item => (
-                    <Link key={item.path} href={item.path}>
+                  {primaryNav.map(item => (
+                    <Link key={item.id} href={item.href}>
                       <span
                         onClick={() => setMobileOpen(false)}
-                        className={`block px-4 py-3 rounded-md text-sm font-medium cursor-pointer transition-colors duration-200 ${
-                          (
-                            item.path === "/"
-                              ? location === "/"
-                              : location.startsWith(item.path)
-                          )
-                            ? "bg-primary/10 text-primary"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        }`}
+                        className={`block px-3 py-3 text-sm ${itemClass(item.id)}`}
                       >
                         {item.label}
                       </span>
                     </Link>
                   ))}
-
-                  <div className="mt-6 pt-6 border-t border-border flex items-center gap-2 px-4">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      asChild
-                      className="hover:text-primary hover:bg-muted"
-                    >
+                  <div className="mt-4 border-t border-border pt-4">
+                    {secondaryNav.map(item => (
+                      <Link key={item.id} href={item.href}>
+                        <span
+                          onClick={() => setMobileOpen(false)}
+                          className={`block px-3 py-3 text-sm ${itemClass(item.id)}`}
+                        >
+                          {item.label}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-4 flex items-center gap-2 px-3">
+                    <Button variant="ghost" size="icon" asChild>
                       <a
                         href="https://github.com/beihaili"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="GitHub"
                       >
-                        <Github className="w-4 h-4" />
+                        <Github className="h-4 w-4" />
                       </a>
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      asChild
-                      className="hover:text-primary hover:bg-muted"
-                    >
+                    <Button variant="ghost" size="icon" asChild>
                       <a
                         href="https://x.com/bhbtc1337"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Twitter"
                       >
-                        <Twitter className="w-4 h-4" />
+                        <Twitter className="h-4 w-4" />
                       </a>
                     </Button>
                   </div>

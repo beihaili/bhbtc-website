@@ -17,7 +17,8 @@ export const blogPosts: BlogPost[] = [
   {
     id: "boss-challenge-route-builder",
     title: "BOSS Challenge #9：给闪电支付铺路",
-    excerpt: "路由不是魔法，是数学。给定一条路径，从收款方往回算每一跳的 HTLC 金额和过期高度——这就是闪电网络的核心逻辑。",
+    excerpt:
+      "路由不是魔法，是数学。给定一条路径，从收款方往回算每一跳的 HTLC 金额和过期高度——这就是闪电网络的核心逻辑。",
     content: `
 # BOSS Challenge #9：给闪电支付铺路
 
@@ -78,7 +79,7 @@ expiry[i] = expiry[i+1] + cltv_delta
     `,
     date: "2026-02-05",
     readTime: "6 分钟",
-    category: "比特币开发",
+    category: "比特币开发笔记",
     tags: ["Lightning Network", "闪电网络", "路由", "HTLC", "BOSS Challenge"],
     author: {
       name: "北海",
@@ -88,7 +89,8 @@ expiry[i] = expiry[i+1] + cltv_delta
   {
     id: "boss-challenge-lightning-node",
     title: "BOSS Challenge #8：第一次跑起自己的闪电节点",
-    excerpt: "SHA256(preimage) = payment_hash，这个简单的哈希承诺，就是闪电网络「无需信任中间人」的全部密码。从链上世界跃入 Layer 2 的第一步。",
+    excerpt:
+      "SHA256(preimage) = payment_hash，这个简单的哈希承诺，就是闪电网络「无需信任中间人」的全部密码。从链上世界跃入 Layer 2 的第一步。",
     content: `
 # BOSS Challenge #8：第一次跑起自己的闪电节点
 
@@ -139,7 +141,7 @@ SHA256(preimage) = payment_hash
     `,
     date: "2026-01-25",
     readTime: "7 分钟",
-    category: "比特币开发",
+    category: "比特币开发笔记",
     tags: ["Lightning Network", "闪电网络", "HTLC", "LND", "BOSS Challenge"],
     author: {
       name: "北海",
@@ -149,7 +151,8 @@ SHA256(preimage) = payment_hash
   {
     id: "boss-challenge-coin-selection",
     title: "BOSS Challenge #7：钱包怎么凑零钱",
-    excerpt: "钱包里不是余额，是一堆大小不一的 UTXO。Coin Selection 就是在解一道组合优化题——怎么选出最优的输入组合，让手续费最小、找零最少。",
+    excerpt:
+      "钱包里不是余额，是一堆大小不一的 UTXO。Coin Selection 就是在解一道组合优化题——怎么选出最优的输入组合，让手续费最小、找零最少。",
     content: `
 # BOSS Challenge #7：钱包怎么凑零钱
 
@@ -211,8 +214,14 @@ waste = selection_size × (fee_rate - long_term_fee_rate) + change_cost + change
     `,
     date: "2026-01-15",
     readTime: "8 分钟",
-    category: "比特币开发",
-    tags: ["Bitcoin Core", "UTXO", "Coin Selection", "钱包开发", "BOSS Challenge"],
+    category: "比特币开发笔记",
+    tags: [
+      "Bitcoin Core",
+      "UTXO",
+      "Coin Selection",
+      "钱包开发",
+      "BOSS Challenge",
+    ],
     author: {
       name: "北海",
       avatar: "/images/profile-avatar.png",
@@ -221,7 +230,8 @@ waste = selection_size × (fee_rate - long_term_fee_rate) + change_cost + change
   {
     id: "default-no-trust",
     title: "Not Your Keys, Not Your Coins：默认不信任",
-    excerpt: "FTX 倒了，Mt.Gox 倒了，下一个会是谁？默认不信任不是偏执，是这个行业用无数血泪换来的教训。只有你的私钥不会背叛你。",
+    excerpt:
+      "FTX 倒了，Mt.Gox 倒了，下一个会是谁？默认不信任不是偏执，是这个行业用无数血泪换来的教训。只有你的私钥不会背叛你。",
     content: `
 # Not Your Keys, Not Your Coins：默认不信任
 
@@ -290,7 +300,7 @@ Not your keys, not your coins.
     `,
     date: "2026-02-12",
     readTime: "5 分钟",
-    category: "比特币",
+    category: "持有随笔",
     tags: ["比特币", "自托管", "安全", "私钥", "Not Your Keys"],
     author: {
       name: "北海",
@@ -300,7 +310,8 @@ Not your keys, not your coins.
   {
     id: "mom-asked-to-withdraw",
     title: "妈妈问我要不要提现",
-    excerpt: "第一次突破新高，我妈问我要不要提现。那一刻我意识到，我和圈外人的思维已经彻底分叉了——对她来说，比特币是赚差价的工具；对我来说，它是资产本身。",
+    excerpt:
+      "第一次突破新高，我妈问我要不要提现。那一刻我意识到，我和圈外人的思维已经彻底分叉了——对她来说，比特币是赚差价的工具；对我来说，它是资产本身。",
     content: `
 # 妈妈问我要不要提现
 
@@ -360,7 +371,7 @@ AHR999 说过：世人熙熙攘攘，鲜有人思考努力的意义。比特币�
     `,
     date: "2026-02-11",
     readTime: "4 分钟",
-    category: "比特币",
+    category: "持有随笔",
     tags: ["比特币", "币本位", "价值观", "长期主义"],
     author: {
       name: "北海",
@@ -370,7 +381,8 @@ AHR999 说过：世人熙熙攘攘，鲜有人思考努力的意义。比特币�
   {
     id: "night-of-312",
     title: "312 的夜晚：判断对了，工具错了",
-    excerpt: "312，比特币闪崩。我在 7000 开了杠杆抄底。判断完全正确——BTC 没变，跌的只是价格。但我还是亏了。这个教训价值连城。",
+    excerpt:
+      "312，比特币闪崩。我在 7000 开了杠杆抄底。判断完全正确——BTC 没变，跌的只是价格。但我还是亏了。这个教训价值连城。",
     content: `
 # 312 的夜晚：判断对了，工具错了
 
@@ -434,7 +446,7 @@ AHR999 说过：世人熙熙攘攘，鲜有人思考努力的意义。比特币�
     `,
     date: "2026-02-09",
     readTime: "5 分钟",
-    category: "比特币",
+    category: "持有随笔",
     tags: ["比特币", "风险管理", "杠杆", "黑天鹅", "经历"],
     author: {
       name: "北海",
@@ -444,7 +456,8 @@ AHR999 说过：世人熙熙攘攘，鲜有人思考努力的意义。比特币�
   {
     id: "fomo-and-shortcuts",
     title: "FOMO 与捷径：囤币已经是捷径中的捷径",
-    excerpt: "刷到别人的暴利截图，第一反应是「我是不是错过了什么」。但AHR999说：你其实已经走在捷径上了，还在拼命到处找捷径。",
+    excerpt:
+      "刷到别人的暴利截图，第一反应是「我是不是错过了什么」。但AHR999说：你其实已经走在捷径上了，还在拼命到处找捷径。",
     content: `
 # FOMO 与捷径：囤币已经是捷径中的捷径
 
@@ -506,7 +519,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2026-02-08",
     readTime: "5 分钟",
-    category: "比特币",
+    category: "持有随笔",
     tags: ["比特币", "囤币", "FOMO", "长期主义", "黑天鹅"],
     author: {
       name: "北海",
@@ -516,7 +529,8 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   {
     id: "coolest-bitcoin-transaction",
     title: "比特币上最酷的交易：写给未来的情书",
-    excerpt: "有一笔交易被称为「密码学纪念碑」。它不是为了转账，而是为了讲故事——交易金额里藏着历史，时间戳指向创世区块，21 层默克尔树。",
+    excerpt:
+      "有一笔交易被称为「密码学纪念碑」。它不是为了转账，而是为了讲故事——交易金额里藏着历史，时间戳指向创世区块，21 层默克尔树。",
     content: `
 # 比特币上最酷的交易：写给未来的情书
 
@@ -577,7 +591,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2025-12-10",
     readTime: "5 分钟",
-    category: "比特币",
+    category: "历史与写作",
     tags: ["比特币", "历史", "密码学", "Taproot", "区块链"],
     author: {
       name: "北海",
@@ -587,7 +601,8 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   {
     id: "bitcoin-history-intro",
     title: "为什么要写《比特币那些事儿》",
-    excerpt: "从《明朝那些事儿》到《比特币那些事儿》,用通俗易懂的叙事方式讲述比特币的历史。这不仅是技术的演进,更是一场理想主义的革命。",
+    excerpt:
+      "从《明朝那些事儿》到《比特币那些事儿》,用通俗易懂的叙事方式讲述比特币的历史。这不仅是技术的演进,更是一场理想主义的革命。",
     content: `
 # 为什么要写《比特币那些事儿》
 
@@ -632,7 +647,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2024-12-15",
     readTime: "5 分钟",
-    category: "比特币",
+    category: "历史与写作",
     tags: ["比特币", "历史", "写作", "开源"],
     author: {
       name: "北海",
@@ -642,7 +657,8 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   {
     id: "web3-learning-path",
     title: "Web3 学习路径:从零到入门",
-    excerpt: "作为一个刚入门 Web3 的新人,我整理了一套系统的学习路径。从基础概念到实战项目,这篇文章将帮助你快速上手 Web3 开发。",
+    excerpt:
+      "作为一个刚入门 Web3 的新人,我整理了一套系统的学习路径。从基础概念到实战项目,这篇文章将帮助你快速上手 Web3 开发。",
     content: `
 # Web3 学习路径:从零到入门
 
@@ -720,7 +736,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2024-11-28",
     readTime: "8 分钟",
-    category: "Web3",
+    category: "开源与入门",
     tags: ["Web3", "教程", "学习路径", "开发"],
     author: {
       name: "北海",
@@ -730,7 +746,8 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   {
     id: "bitcoin-philosophy",
     title: "比特币的理想主义:为什么我选择币本位",
-    excerpt: "币本位不仅是一种投资策略,更是一种价值观。这篇文章探讨了比特币背后的理想主义,以及为什么我坚信去中心化的未来。",
+    excerpt:
+      "币本位不仅是一种投资策略,更是一种价值观。这篇文章探讨了比特币背后的理想主义,以及为什么我坚信去中心化的未来。",
     content: `
 # 比特币的理想主义:为什么我选择币本位
 
@@ -799,7 +816,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2024-10-20",
     readTime: "6 分钟",
-    category: "比特币",
+    category: "持有随笔",
     tags: ["比特币", "币本位", "理想主义", "去中心化"],
     author: {
       name: "北海",
@@ -809,7 +826,8 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   {
     id: "open-source-spirit",
     title: "开源精神:为什么我的项目都是开源的",
-    excerpt: "开源不仅是一种开发模式,更是一种价值观。这篇文章分享了我对开源精神的理解,以及为什么我坚持开源所有项目。",
+    excerpt:
+      "开源不仅是一种开发模式,更是一种价值观。这篇文章分享了我对开源精神的理解,以及为什么我坚持开源所有项目。",
     content: `
 # 开源精神:为什么我的项目都是开源的
 
@@ -891,7 +909,7 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
     `,
     date: "2024-09-15",
     readTime: "7 分钟",
-    category: "开源",
+    category: "开源与入门",
     tags: ["开源", "GitHub", "社区", "协作"],
     author: {
       name: "北海",
@@ -900,8 +918,22 @@ FOMO 那天，我看了一眼收益截图，然后关掉了手机。
   },
 ];
 
-// Get all unique categories
-export const categories = Array.from(new Set(blogPosts.map(post => post.category)));
+export const categories = [
+  "比特币开发笔记",
+  "持有随笔",
+  "历史与写作",
+  "开源与入门",
+] as const;
 
-// Get all unique tags
-export const allTags = Array.from(new Set(blogPosts.flatMap(post => post.tags)));
+export const bitcoinCategories: readonly string[] = [
+  "比特币开发笔记",
+  "持有随笔",
+];
+
+export function postsNewestFirst(): BlogPost[] {
+  return [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export const allTags = Array.from(
+  new Set(blogPosts.flatMap(post => post.tags))
+);

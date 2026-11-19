@@ -1,82 +1,72 @@
 import { Github, Mail, Twitter } from "lucide-react";
 import { Link } from "wouter";
 
+const links = [
+  { label: "首页", href: "/" },
+  { label: "比特币", href: "/blog?pillar=bitcoin" },
+  { label: "写作", href: "/blog" },
+  { label: "AI", href: "/ai" },
+  { label: "项目", href: "/projects" },
+  { label: "关于", href: "/about" },
+  { label: "联系", href: "/contact" },
+];
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const links = [
-    { label: "首页", href: "/" },
-    { label: "AI案例库", href: "/ai" },
-    { label: "项目", href: "/projects" },
-    { label: "博客", href: "/blog" },
-    { label: "关于", href: "/about" },
-    { label: "联系", href: "/contact" },
-  ];
-
   return (
-    <footer className="mt-20 border-t border-border/70 bg-[#090b10] text-white">
+    <footer className="mt-8 border-t border-border">
       <div className="container py-10">
-        <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr_0.9fr] md:items-start">
+        <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_1fr]">
           <div>
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-lg font-black text-primary-foreground">
-                ₿
-              </div>
-              <div>
-                <div className="font-black">北海 bhbtc</div>
-                <div className="text-sm text-white/[0.52]">Bitcoin & Web3</div>
-              </div>
-            </div>
-            <p className="max-w-sm text-sm leading-7 text-white/[0.58]">
-              币本位 · 比特币开发者 ·
-              教育者。用开源写作和代码，把复杂技术讲清楚。
+            <p className="font-serif text-lg">北海</p>
+            <p className="mt-2 max-w-sm text-sm leading-7 text-muted-foreground">
+              比特币开发者、教育者和写作者。三条线：比特币、写作、AI。
             </p>
           </div>
 
           <div>
-            <div className="mb-4 text-sm font-black text-white/[0.72]">
-              站内导航
-            </div>
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <p className="text-sm text-foreground">站内</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
               {links.map(item => (
-                <Link key={item.href} href={item.href}>
-                  <span className="text-white/[0.56] transition-colors hover:text-primary">
-                    {item.label}
-                  </span>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  {item.label}
                 </Link>
               ))}
             </div>
           </div>
 
           <div>
-            <div className="mb-4 text-sm font-black text-white/[0.72]">
-              项目入口
-            </div>
-            <div className="space-y-3 text-sm">
+            <p className="text-sm text-foreground">作品</p>
+            <div className="mt-3 space-y-2 text-sm">
+              <a
+                href="https://beihaili.github.io/Stories-about-Bitcoin/zh/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-muted-foreground hover:text-foreground"
+              >
+                比特币那些事儿
+              </a>
               <a
                 href="https://github.com/beihaili/Get-Started-with-Web3"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-white/[0.56] transition-colors hover:text-primary"
+                className="block text-muted-foreground hover:text-foreground"
               >
                 Get Started with Web3
-              </a>
-              <a
-                href="https://github.com/beihaili/Stories-about-Bitcoin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-white/[0.56] transition-colors hover:text-primary"
-              >
-                比特币那些事儿
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
-          <div className="text-sm text-white/[0.45]">
-            © {currentYear} 北海 (bhbtc). All rights reserved.
-          </div>
+        <div className="mt-8 flex flex-col gap-4 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} 北海（bhbtc）
+          </p>
           <div className="flex items-center gap-3">
             {[
               {
@@ -108,7 +98,7 @@ export default function Footer() {
                       ? undefined
                       : "noopener noreferrer"
                   }
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/[0.62] transition-colors hover:border-primary/40 hover:text-primary"
+                  className="text-muted-foreground hover:text-foreground"
                   aria-label={item.label}
                 >
                   <Icon className="h-4 w-4" />
