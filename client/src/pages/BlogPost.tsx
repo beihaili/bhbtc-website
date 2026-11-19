@@ -5,16 +5,8 @@ import Footer from "@/components/Footer";
 import GiscusComments from "@/components/GiscusComments";
 import BTCDonation from "@/components/BTCDonation";
 import TableOfContents, { type TocItem } from "@/components/TableOfContents";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  Clock,
-  Share2,
-  Tag,
-} from "lucide-react";
+import { Share2 } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { Streamdown } from "streamdown";
 import { toast } from "sonner";
@@ -27,6 +19,17 @@ function slugify(text: string): string {
     .replace(/[\s\u3000]+/g, "-")
     .replace(/[^\w\u4e00-\u9fff-]/g, "")
     .replace(/^-+|-+$/g, "");
+}
+
+function articleBody(title: string, content: string) {
+  const lines = content.replace(/^\n/, "").split("\n");
+  if (lines[0]?.startsWith("# ")) {
+    const heading = lines[0].replace(/^#\s+/, "").trim();
+    if (heading === title.trim()) {
+      return lines.slice(1).join("\n").replace(/^\n/, "");
+    }
+  }
+  return content;
 }
 
 export default function BlogPost() {
@@ -68,14 +71,14 @@ export default function BlogPost() {
     return (
       <div className="site-page">
         <Navigation />
-        <main className="flex flex-1 items-center justify-center px-4">
+        <main className="flex flex-1 items-center justify-center px-6 pt-24">
           <div className="max-w-md text-center">
-            <h1 className="text-4xl font-black">文章未找到</h1>
+            <h1 className="page-title">文章未找到</h1>
             <p className="mt-4 text-muted-foreground">
-              抱歉，您访问的文章不存在
+              这篇地址没有对应的文章。
             </p>
-            <Button className="mt-6 rounded-full" asChild>
-              <Link href="/blog">返回博客列表</Link>
+            <Button className="mt-6" asChild>
+              <Link href="/blog">返回写作</Link>
             </Button>
           </div>
         </main>
@@ -97,116 +100,74 @@ export default function BlogPost() {
     <div className="site-page">
       <Navigation />
 
-      <main className="flex-1 overflow-hidden">
-        <section className="relative overflow-hidden pt-28 pb-12 md:pt-36 md:pb-16">
-          <img
-            src="/images/bitcoin-history-bg.jpg"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover opacity-[0.28]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/[0.82] via-background/[0.94] to-background" />
-
-          <div className="container relative z-10">
-            <div className="mx-auto max-w-4xl">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="mb-8 rounded-full"
-                asChild
-              >
-                <Link href="/blog">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  返回博客
+      <main className="flex-1">
+        <header className="border-b border-border pt-24 pb-10 md:pt-28 md:pb-12">
+          <div className="container">
+            <div className="max-w-[40rem]">
+              <p className="text-sm">
+                <Link
+                  href="/blog"
+                  className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                >
+                  写作
                 </Link>
-              </Button>
-
-              <div className="mb-5 flex flex-wrap items-center gap-3">
-                <Badge variant="secondary" className="rounded-full">
-                  {post.category}
-                </Badge>
-                <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  {post.date}
+                <span className="px-2 text-muted-foreground" aria-hidden="true">
+                  /
                 </span>
-                <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  {post.readTime}
-                </span>
-              </div>
-
-              <h1 className="text-4xl font-black leading-tight md:text-6xl">
-                {post.title}
-              </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">
+                <span className="text-primary">{post.category}</span>
+              </p>
+              <h1 className="page-title mt-4">{post.title}</h1>
+              <p className="mt-5 text-base leading-8 text-muted-foreground md:text-lg">
                 {post.excerpt}
               </p>
-
-              <div className="mt-8 flex flex-col gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-2 text-foreground">
                   <img
                     src={post.author.avatar}
-                    alt={post.author.name}
-                    className="h-12 w-12 rounded-full border-2 border-primary/25"
+                    alt=""
+                    className="h-8 w-8 rounded-full object-cover"
                   />
-                  <div>
-                    <p className="font-black">{post.author.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      比特币开发者 · 教育者
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <BTCDonation />
-                  <Button
-                    variant="outline"
-                    className="rounded-full"
-                    onClick={handleShare}
-                  >
-                    <Share2 className="mr-2 h-4 w-4" />
-                    分享
-                  </Button>
-                </div>
+                  {post.author.name}
+                </span>
+                <time dateTime={post.date}>{post.date}</time>
+                <span>{post.readTime}</span>
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-1.5 hover:text-foreground"
+                >
+                  <Share2 className="h-3.5 w-3.5" />
+                  复制链接
+                </button>
+                <BTCDonation />
               </div>
             </div>
           </div>
-        </section>
+        </header>
 
-        <section className="pb-20">
+        <section className="py-10 md:py-14">
           <div className="container">
-            <div className="flex justify-center gap-10">
-              <article className="w-full max-w-3xl rounded-[2rem] border border-border/60 bg-card/[0.82] p-6 shadow-2xl shadow-black/5 backdrop-blur md:p-9 dark:bg-white/[0.08]">
+            <div className="flex justify-center gap-14">
+              <article className="w-full max-w-[40rem] min-w-0">
                 <div
                   ref={articleRef}
-                  className={`prose prose-lg max-w-none ${
-                    theme === "dark" ? "prose-invert" : ""
-                  }`}
+                  className={`prose ${theme === "dark" ? "prose-invert" : ""}`}
                 >
-                  <Streamdown>{post.content}</Streamdown>
+                  <Streamdown>
+                    {articleBody(post.title, post.content)}
+                  </Streamdown>
                 </div>
 
-                <div className="mt-12 border-t border-border pt-8">
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map(tag => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="rounded-full"
-                      >
-                        <Tag className="mr-1 h-3 w-3" />
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                <div className="mt-10 flex flex-wrap gap-x-3 gap-y-2 border-t border-border pt-6 text-sm text-muted-foreground">
+                  {post.tags.map(tag => (
+                    <span key={tag}>{tag}</span>
+                  ))}
                 </div>
 
-                <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-3xl border border-primary/20 bg-primary/[0.07] p-6 sm:flex-row sm:items-center">
-                  <div>
-                    <p className="font-black">觉得有帮助？</p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      用 BTC 打赏支持作者继续创作
-                    </p>
-                  </div>
+                <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 sm:flex-row sm:items-center">
+                  <p className="text-sm text-muted-foreground">
+                    觉得有帮助，可以用 BTC 打赏，支持继续写下去。
+                  </p>
                   <BTCDonation />
                 </div>
 
@@ -214,8 +175,8 @@ export default function BlogPost() {
               </article>
 
               {tocItems.length > 0 && (
-                <aside className="hidden w-56 shrink-0 xl:block">
-                  <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-border/60 bg-card/[0.72] p-4 backdrop-blur dark:bg-white/[0.08]">
+                <aside className="hidden w-52 shrink-0 xl:block">
+                  <div className="sticky top-24">
                     <TableOfContents items={tocItems} />
                   </div>
                 </aside>
@@ -225,40 +186,32 @@ export default function BlogPost() {
         </section>
 
         {relatedPosts.length > 0 && (
-          <section className="bg-card/35 py-20">
+          <section className="border-t border-border py-12">
             <div className="container">
-              <div className="mx-auto max-w-5xl">
-                <h2 className="mb-8 text-3xl font-black">相关文章</h2>
-                <div className="grid gap-5 md:grid-cols-2">
-                  {relatedPosts.map(relatedPost => (
-                    <article
-                      key={relatedPost.id}
-                      className="elevated-card rounded-3xl p-6"
-                    >
-                      <Badge variant="secondary" className="mb-4 rounded-full">
-                        {relatedPost.category}
-                      </Badge>
-                      <h3 className="text-xl font-black leading-tight transition-colors hover:text-primary">
-                        <Link href={`/blog/${relatedPost.id}`}>
-                          {relatedPost.title}
-                        </Link>
-                      </h3>
-                      <p className="mt-4 line-clamp-2 leading-7 text-muted-foreground">
-                        {relatedPost.excerpt}
-                      </p>
-                      <Button
-                        variant="ghost"
-                        className="mt-5 rounded-full px-0 text-primary hover:px-4"
-                        asChild
+              <h2 className="font-serif text-2xl">同一分类</h2>
+              <div className="mt-6 grid gap-8 md:grid-cols-2">
+                {relatedPosts.map(relatedPost => (
+                  <article key={relatedPost.id} className="max-w-[36rem]">
+                    <p className="text-sm text-muted-foreground">
+                      {relatedPost.date}
+                      <span className="px-2" aria-hidden="true">
+                        ·
+                      </span>
+                      {relatedPost.category}
+                    </p>
+                    <h3 className="mt-2 font-serif text-xl leading-snug">
+                      <Link
+                        href={`/blog/${relatedPost.id}`}
+                        className="hover:text-primary"
                       >
-                        <Link href={`/blog/${relatedPost.id}`}>
-                          继续阅读
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </article>
-                  ))}
-                </div>
+                        {relatedPost.title}
+                      </Link>
+                    </h3>
+                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-muted-foreground">
+                      {relatedPost.excerpt}
+                    </p>
+                  </article>
+                ))}
               </div>
             </div>
           </section>
